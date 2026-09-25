@@ -18,14 +18,14 @@ public class Cliente {
     }
 
     // El cliente contrata un proyecto
-    public void contratarProyecto(Proyecto proyecto) {
+    public boolean contratarProyecto(Proyecto proyecto) {
 
         if (proyecto == null) {
-            return;
+            return false;
         }
 
         if (proyecto.getCliente() != null) {
-            return;
+            return false;
         }
 
         proyecto.setCliente(this);
@@ -33,6 +33,7 @@ public class Cliente {
         cantidadProyectos++;
 
         proyecto.calcularValorTotal();
+        return false;
     }
 
     // Verifica si es cliente frecuente

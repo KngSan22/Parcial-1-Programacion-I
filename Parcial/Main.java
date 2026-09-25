@@ -42,9 +42,9 @@ public class Main {
 
                 Cliente cliente = new Cliente(nombre, documento, telefono, correo, pais);
 
-                empresa.registrarCliente(cliente);
-
-                JOptionPane.showMessageDialog(null, "Cliente registrado correctamente.");
+                if (empresa.registrarCliente(cliente)) {
+                    JOptionPane.showMessageDialog(null, "Cliente registrado correctamente.");
+                }
             }
 
             // 2. Registrar desarrollador
@@ -75,9 +75,9 @@ public class Main {
 
                 Desarrollador desarrollador = new Desarrollador(codigo, equipo, nivel, maxProyectos, tarifa);
 
-                empresa.registrarDesarrollador(desarrollador);
-
-                JOptionPane.showMessageDialog(null, "Desarrollador registrado correctamente.");
+                if (empresa.registrarDesarrollador(desarrollador)) {
+                    JOptionPane.showMessageDialog(null, "Desarrollador registrado correctamente.");
+                }
             }
 
             // 3. Registrar servicio
@@ -103,9 +103,9 @@ public class Main {
 
                 Servicio servicio = new Servicio(codigo, nombre, descripcion, costo, estaDisponible);
 
-                empresa.registrarServicio(servicio);
-
-                JOptionPane.showMessageDialog(null, "Servicio registrado correctamente.");
+                if (empresa.registrarServicio(servicio)) {
+                    JOptionPane.showMessageDialog(null, "Servicio registrado correctamente.");
+                }
             }
 
             // 4. Registrar proyecto
@@ -155,11 +155,13 @@ public class Main {
 
                     Proyecto proyecto = new Proyecto(codigo, fechaSolicitud, fechaInicio, fechaEntrega, pago);
 
-                    cliente.contratarProyecto(proyecto);
-
-                    empresa.registrarProyecto(proyecto);
-
-                    JOptionPane.showMessageDialog(null, "Proyecto registrado correctamente.");
+                    if (cliente.contratarProyecto(proyecto)) {
+                        if (empresa.registrarProyecto(proyecto)) {
+                            JOptionPane.showMessageDialog(null, "Proyecto registrado correctamente.");
+                        } else {
+                            proyecto.setCliente(null);
+                        }
+                    }
                 }
             }
 

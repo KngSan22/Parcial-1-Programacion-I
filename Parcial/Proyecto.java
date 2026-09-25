@@ -56,42 +56,26 @@ public class Proyecto {
     }
 
     public static boolean esEstadoValido(String estado) {
-
-        return PENDIENTE.equals(estado)
-                || CONFIRMADO.equals(estado)
-                || EN_CURSO.equals(estado)
-                || FINALIZADO.equals(estado)
-                || CANCELADO.equals(estado);
+        return PENDIENTE.equals(estado) || CONFIRMADO.equals(estado) || EN_CURSO.equals(estado) || FINALIZADO.equals(estado) || CANCELADO.equals(estado);
     }
 
     public static boolean esMetodoPagoValido(String metodo) {
-
-        return TARJETA_CREDITO.equals(metodo)
-                || TRANSFERENCIA.equals(metodo)
-                || EFECTIVO.equals(metodo);
+        return TARJETA_CREDITO.equals(metodo) || TRANSFERENCIA.equals(metodo) || EFECTIVO.equals(metodo);
     }
 
     // Lo utiliza Desarrollador
     public boolean estaActivo() {
-
-        return estado.equals(CONFIRMADO)
-                || estado.equals(EN_CURSO);
+        return estado.equals(CONFIRMADO) || estado.equals(EN_CURSO);
     }
 
     // Lo utiliza Desarrollador
     public boolean seSolapaCon(LocalDate inicio, LocalDate fin) {
-
-        return !fechaInicio.isAfter(fin)
-                && !inicio.isAfter(fechaEntrega);
+        return !fechaInicio.isAfter(fin) && !inicio.isAfter(fechaEntrega);
     }
 
     // Lo utiliza Main
     public int calcularDiasDesarrollo() {
-
-        return (int) (
-                fechaEntrega.toEpochDay()
-                        - fechaInicio.toEpochDay()
-        ) + 1;
+        return (int) (fechaEntrega.toEpochDay() - fechaInicio.toEpochDay()) + 1;
     }
 
     // Lo utiliza Main y Empresa
@@ -101,21 +85,16 @@ public class Proyecto {
         double subtotal = 0;
 
         for (int i = 0; i < cantidadDesarrolladores; i++) {
-
-            subtotal += listDesarrolladores[i]
-                    .calcularTarifaDesarrollo(dias);
+            subtotal += listDesarrolladores[i].calcularTarifaDesarrollo(dias);
         }
 
         for (int i = 0; i < cantidadServicios; i++) {
-
-            subtotal += listServicios[i]
-                    .calcularCostoServicio();
+            subtotal += listServicios[i].calcularCostoServicio();
         }
 
         double descuento = 0;
 
         if (cliente != null && cliente.esClienteFrecuente()) {
-
             descuento = subtotal * DESCUENTO_CLIENTE_FRECUENTE;
         }
 
