@@ -25,7 +25,6 @@ public class Main {
                             + "8. Mostrar informacion\n"
                             + "9. Salir";
 
-
             opcion = Integer.parseInt(JOptionPane.showInputDialog(menu));
 
             // 1. Registrar cliente
@@ -81,7 +80,7 @@ public class Main {
                 JOptionPane.showMessageDialog(null, "Desarrollador registrado correctamente.");
             }
 
-            // 3. REGISTRAR SERVICIO
+            // 3. Registrar servicio
             else if (opcion == 3) {
 
                 String codigo = JOptionPane.showInputDialog("Codigo del servicio:");
@@ -164,7 +163,7 @@ public class Main {
                 }
             }
 
-            // 5. CONSULTAR CLIENTE
+            // 5. Consultar cliente
             else if (opcion == 5) {
 
                 String documento = JOptionPane.showInputDialog("Ingrese NIT o documento:");
@@ -197,7 +196,7 @@ public class Main {
                 }
             }
 
-            // 6. CONSULTAR PROYECTO
+            // 6. Consultar proyecto
             else if (opcion == 6) {
 
                 String codigo = JOptionPane.showInputDialog("Codigo del proyecto:");

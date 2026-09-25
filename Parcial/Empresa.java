@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.time.LocalDate;
 
 public class Empresa {
@@ -22,8 +23,7 @@ public class Empresa {
     private Servicio[] listServicios;
     private int cantidadServicios;
 
-    public Empresa(String nombreComercial, String nit, String direccion,
-                   long telefono, String paginaWeb) {
+    public Empresa(String nombreComercial, String nit, String direccion, long telefono, String paginaWeb) {
 
         this.nombreComercial = nombreComercial;
         this.nit = nit;
@@ -42,8 +42,7 @@ public class Empresa {
         this.cantidadServicios = 0;
     }
 
-    // ---------------- Busquedas ----------------
-
+    // Buscar cliente
     public Cliente buscarCliente(String nitODocumento) {
 
         for (int i = 0; i < cantidadClientes; i++) {
@@ -56,6 +55,7 @@ public class Empresa {
         return null;
     }
 
+    // Buscar proyecto
     public Proyecto buscarProyecto(String codigo) {
 
         for (int i = 0; i < cantidadProyectos; i++) {
@@ -68,6 +68,7 @@ public class Empresa {
         return null;
     }
 
+    // Buscar desarrollador
     public Desarrollador buscarDesarrollador(String codigo) {
 
         for (int i = 0; i < cantidadDesarrolladores; i++) {
@@ -80,6 +81,7 @@ public class Empresa {
         return null;
     }
 
+    // Buscar servicio
     public Servicio buscarServicio(String codigo) {
 
         for (int i = 0; i < cantidadServicios; i++) {
@@ -92,6 +94,7 @@ public class Empresa {
         return null;
     }
 
+    // Verifica si el cliente ya esta registrado
     private boolean clienteRegistrado(Cliente cliente) {
 
         for (int i = 0; i < cantidadClientes; i++) {
@@ -104,88 +107,61 @@ public class Empresa {
         return false;
     }
 
-    // ---------------- Registros ----------------
-
+    // Registrar cliente
     public void registrarCliente(Cliente cliente) {
 
         if (cliente == null) {
-            System.out.println("Cliente invalido.");
+            JOptionPane.showMessageDialog(null, "Cliente invalido.");
             return;
         }
 
         if (cantidadClientes == CAPACIDAD) {
-            System.out.println("No hay espacio para mas clientes.");
+            JOptionPane.showMessageDialog(null, "No hay espacio para mas clientes.");
             return;
         }
 
         if (buscarCliente(cliente.getNitODocumento()) != null) {
-
-            System.out.println(
-                    "Ya existe un cliente con documento/NIT "
-                            + cliente.getNitODocumento() + "."
-            );
-
+            JOptionPane.showMessageDialog(null, "Ya existe un cliente con documento/NIT " + cliente.getNitODocumento() + ".");
             return;
         }
 
         listClientes[cantidadClientes] = cliente;
         cantidadClientes++;
-
-        System.out.println(
-                "Cliente registrado: "
-                        + cliente.getNombreCompletoORazonSocial()
-        );
     }
 
+    // Registrar proyecto
     public void registrarProyecto(Proyecto proyecto) {
 
         if (proyecto == null) {
-            System.out.println("Proyecto invalido.");
+            JOptionPane.showMessageDialog(null, "Proyecto invalido.");
             return;
         }
 
         if (cantidadProyectos == CAPACIDAD) {
-            System.out.println("No hay espacio para mas proyectos.");
+            JOptionPane.showMessageDialog(null, "No hay espacio para mas proyectos.");
             return;
         }
 
         if (buscarProyecto(proyecto.getCodigoProyecto()) != null) {
-
-            System.out.println(
-                    "Ya existe un proyecto con codigo "
-                            + proyecto.getCodigoProyecto() + "."
-            );
-
+            JOptionPane.showMessageDialog(null, "Ya existe un proyecto con codigo " + proyecto.getCodigoProyecto() + ".");
             return;
         }
 
-        if (proyecto.getCliente() == null ||
-                !clienteRegistrado(proyecto.getCliente())) {
+        if (proyecto.getCliente() == null || !clienteRegistrado(proyecto.getCliente())) {
 
-            System.out.println(
-                    "El proyecto debe estar contratado por un cliente registrado."
-            );
-
+            JOptionPane.showMessageDialog(null, "El proyecto debe estar contratado por un cliente registrado.");
             return;
         }
 
         if (!Proyecto.esMetodoPagoValido(proyecto.getMetodoPago())) {
 
-            System.out.println(
-                    "Metodo de pago invalido: "
-                            + proyecto.getMetodoPago()
-            );
-
+            JOptionPane.showMessageDialog(null, "Metodo de pago invalido: " + proyecto.getMetodoPago());
             return;
         }
 
-        if (proyecto.getFechaInicio().isBefore(proyecto.getFechaSolicitud()) ||
-                proyecto.getFechaEntrega().isBefore(proyecto.getFechaInicio())) {
+        if (proyecto.getFechaInicio().isBefore(proyecto.getFechaSolicitud()) || proyecto.getFechaEntrega().isBefore(proyecto.getFechaInicio())) {
 
-            System.out.println(
-                    "Fechas invalidas (solicitud <= inicio <= entrega)."
-            );
-
+            JOptionPane.showMessageDialog(null, "Fechas invalidas (solicitud <= inicio <= entrega).");
             return;
         }
 
@@ -193,92 +169,66 @@ public class Empresa {
 
         listProyectos[cantidadProyectos] = proyecto;
         cantidadProyectos++;
-
-        System.out.println(
-                "Proyecto registrado: "
-                        + proyecto.getCodigoProyecto()
-        );
     }
 
+    // Registrar desarrollador
     public void registrarDesarrollador(Desarrollador desarrollador) {
 
         if (desarrollador == null) {
-            System.out.println("Desarrollador invalido.");
+            JOptionPane.showMessageDialog(null, "Desarrollador invalido.");
             return;
         }
 
         if (cantidadDesarrolladores == CAPACIDAD) {
-            System.out.println("No hay espacio para mas desarrolladores.");
+            JOptionPane.showMessageDialog(null, "No hay espacio para mas desarrolladores.");
             return;
         }
 
         if (buscarDesarrollador(
                 desarrollador.getCodigoDesarrollador()) != null) {
 
-            System.out.println(
-                    "Ya existe un desarrollador con codigo "
-                            + desarrollador.getCodigoDesarrollador() + "."
-            );
-
+            JOptionPane.showMessageDialog(null, "Ya existe un desarrollador con codigo " + desarrollador.getCodigoDesarrollador() + ".");
             return;
         }
 
-        if (!Desarrollador.esNivelValido(desarrollador.getNivel())) {
+        if (!Desarrollador.esNivelValido(
+                desarrollador.getNivel())) {
 
-            System.out.println(
-                    "Nivel invalido: "
-                            + desarrollador.getNivel()
-            );
-
+            JOptionPane.showMessageDialog(null, "Nivel invalido: " + desarrollador.getNivel());
             return;
         }
 
         listDesarrolladores[cantidadDesarrolladores] = desarrollador;
         cantidadDesarrolladores++;
-
-        System.out.println(
-                "Desarrollador registrado: "
-                        + desarrollador.getCodigoDesarrollador()
-        );
     }
 
+    // Registrar servicio
     public void registrarServicio(Servicio servicio) {
 
         if (servicio == null) {
-            System.out.println("Servicio invalido.");
+            JOptionPane.showMessageDialog(null, "Servicio invalido.");
             return;
         }
 
         if (cantidadServicios == CAPACIDAD) {
-            System.out.println("No hay espacio para mas servicios.");
+            JOptionPane.showMessageDialog(null, "No hay espacio para mas servicios.");
             return;
         }
 
         if (buscarServicio(servicio.getCodigo()) != null) {
 
-            System.out.println(
-                    "Ya existe un servicio con codigo "
-                            + servicio.getCodigo() + "."
-            );
-
+            JOptionPane.showMessageDialog(null, "Ya existe un servicio con codigo " + servicio.getCodigo() + ".");
             return;
         }
 
         listServicios[cantidadServicios] = servicio;
         cantidadServicios++;
-
-        System.out.println(
-                "Servicio registrado: "
-                        + servicio.getNombre()
-        );
     }
 
-    // ---------------- Consultas ----------------
-
+    // Consultar cliente por telefono
     public Cliente consultarClientePorTelefono(long telefono) {
 
         for (int i = 0; i < cantidadClientes; i++) {
-
             if (listClientes[i].getTelefono() == telefono) {
                 return listClientes[i];
             }
@@ -287,6 +237,7 @@ public class Empresa {
         return null;
     }
 
+    // Calcular ingreso por fecha
     public double calcularIngresoPorFecha(LocalDate fecha) {
 
         double acumulado = 0;
@@ -296,9 +247,7 @@ public class Empresa {
         }
 
         for (int i = 0; i < cantidadProyectos; i++) {
-
             if (listProyectos[i].getFechaSolicitud().equals(fecha)) {
-
                 acumulado += listProyectos[i].getValorTotal();
             }
         }
@@ -306,86 +255,59 @@ public class Empresa {
         return acumulado;
     }
 
-    // ---------------- Listados ----------------
-
+    // Listar clientes
     public void listarClientes() {
 
-        System.out.println(
-                "--- Clientes (" + cantidadClientes + ") ---"
-        );
+        JOptionPane.showMessageDialog(null,"--- Clientes (" + cantidadClientes + ") ---");
 
         for (int i = 0; i < cantidadClientes; i++) {
-
-            System.out.println(
-                    (i + 1) + ". "
-                            + listClientes[i].getNombreCompletoORazonSocial()
-            );
+            JOptionPane.showMessageDialog(null, (i + 1) + ". " + listClientes[i].getNombreCompletoORazonSocial());
         }
     }
 
+    // Listar proyectos
     public void listarProyectos() {
 
-        System.out.println(
-                "--- Proyectos (" + cantidadProyectos + ") ---"
-        );
+        JOptionPane.showMessageDialog(null, "--- Proyectos (" + cantidadProyectos + ") ---");
 
         for (int i = 0; i < cantidadProyectos; i++) {
-
-            System.out.println(
-                    (i + 1) + ". "
-                            + listProyectos[i].getCodigoProyecto()
-            );
+            JOptionPane.showMessageDialog(null,(i + 1) + ". " + listProyectos[i].getCodigoProyecto());
         }
     }
 
+    //Listar desarrolladores
     public void listarDesarrolladores() {
 
-        System.out.println(
-                "--- Desarrolladores (" + cantidadDesarrolladores + ") ---"
-        );
+        JOptionPane.showMessageDialog(null, "--- Desarrolladores (" + cantidadDesarrolladores + ") ---");
 
         for (int i = 0; i < cantidadDesarrolladores; i++) {
-
-            System.out.println(
-                    (i + 1) + ". "
-                            + listDesarrolladores[i].getCodigoDesarrollador()
-            );
+            JOptionPane.showMessageDialog(null,(i + 1) + ". " + listDesarrolladores[i].getCodigoDesarrollador());
         }
     }
 
+    //Listar servicios
     public void listarServicios() {
 
-        System.out.println(
-                "--- Servicios (" + cantidadServicios + ") ---"
-        );
+        JOptionPane.showMessageDialog(null, "--- Servicios (" + cantidadServicios + ") ---");
 
         for (int i = 0; i < cantidadServicios; i++) {
-
-            System.out.println(
-                    (i + 1) + ". "
-                            + listServicios[i].getNombre()
-            );
+            JOptionPane.showMessageDialog(null, (i + 1) + ". " + listServicios[i].getNombre());
         }
     }
 
-    // ---------------- Getters ----------------
-
+    // Getters
     public String getNombreComercial() {
         return nombreComercial;
     }
-
     public String getNit() {
         return nit;
     }
-
     public String getDireccion() {
         return direccion;
     }
-
     public long getTelefono() {
         return telefono;
     }
-
     public String getPaginaWeb() {
         return paginaWeb;
     }

@@ -2,16 +2,16 @@ import java.time.LocalDate;
 
 public class Desarrollador {
 
+    // Niveles
+    public static final String JUNIOR = "Junior";
+    public static final String SEMISENIOR = "Semisenior";
+    public static final String SENIOR = "Senior";
+
     // Estados
     public static final String DISPONIBLE = "Disponible";
     public static final String ASIGNADO = "Asignado";
     public static final String OCUPADO = "Ocupado";
     public static final String EN_CAPACITACION = "En capacitacion";
-
-    // Niveles
-    public static final String JUNIOR = "Junior";
-    public static final String SEMISENIOR = "Semisenior";
-    public static final String SENIOR = "Senior";
 
     private static final int MAX_LISTA_PROYECTOS = 100;
 
@@ -25,34 +25,26 @@ public class Desarrollador {
     private Proyecto[] listProyectos;
     private int cantidadProyectos;
 
-    public Desarrollador(String codigoDesarrollador, String equipoTrabajo, String nivel,
-                         int maxProyectosSimultaneos, double tarifaPorDia) {
+    public Desarrollador(String codigoDesarrollador, String equipoTrabajo, String nivel, int maxProyectosSimultaneos, double tarifaPorDia) {
 
         this.codigoDesarrollador = codigoDesarrollador;
         this.equipoTrabajo = equipoTrabajo;
         this.nivel = nivel;
         this.maxProyectosSimultaneos = maxProyectosSimultaneos;
         this.tarifaPorDia = tarifaPorDia;
+
         this.estado = DISPONIBLE;
 
         this.listProyectos = new Proyecto[MAX_LISTA_PROYECTOS];
         this.cantidadProyectos = 0;
     }
 
+    // Para Empresa!
     public static boolean esNivelValido(String nivel) {
-        return JUNIOR.equals(nivel) ||
-                SEMISENIOR.equals(nivel) ||
-                SENIOR.equals(nivel);
+        return JUNIOR.equals(nivel) || SEMISENIOR.equals(nivel) || SENIOR.equals(nivel);
     }
 
-    public static boolean esEstadoValido(String estado) {
-        return DISPONIBLE.equals(estado) ||
-                ASIGNADO.equals(estado) ||
-                OCUPADO.equals(estado) ||
-                EN_CAPACITACION.equals(estado);
-    }
-
-    // Verifica si el desarrollador está disponible en un rango de fechas
+    // Proyecto! no tocar!!!
     public boolean verificarDisponibilidad(LocalDate inicio, LocalDate fin) {
 
         if (estado.equals(EN_CAPACITACION)) {
@@ -63,9 +55,11 @@ public class Desarrollador {
 
         for (int i = 0; i < cantidadProyectos; i++) {
 
-            Proyecto p = listProyectos[i];
+            Proyecto proyecto = listProyectos[i];
 
-            if (p.estaActivo() && p.seSolapaCon(inicio, fin)) {
+            if (proyecto.estaActivo()
+                    && proyecto.seSolapaCon(inicio, fin)) {
+
                 solapados++;
             }
         }
@@ -73,7 +67,7 @@ public class Desarrollador {
         return solapados < maxProyectosSimultaneos;
     }
 
-    // Asigna un proyecto al desarrollador
+    // Proyecto! no tocar!
     public void asignarProyecto(Proyecto proyecto) {
 
         if (proyecto == null) {
@@ -88,12 +82,6 @@ public class Desarrollador {
         }
 
         if (cantidadProyectos == MAX_LISTA_PROYECTOS) {
-
-            System.out.println(
-                    "El desarrollador " + codigoDesarrollador +
-                            " no tiene mas espacio en su lista de proyectos."
-            );
-
             return;
         }
 
@@ -101,7 +89,7 @@ public class Desarrollador {
         cantidadProyectos++;
     }
 
-    // Actualiza el estado según los proyectos activos
+    // Proyecto! no tocar
     public void actualizarEstado() {
 
         if (estado.equals(EN_CAPACITACION)) {
@@ -128,6 +116,7 @@ public class Desarrollador {
         }
     }
 
+    // Para proyecto!!! No tocar
     public double calcularTarifaDesarrollo(int dias) {
         return tarifaPorDia * dias;
     }
@@ -136,42 +125,29 @@ public class Desarrollador {
     public String getCodigoDesarrollador() {
         return codigoDesarrollador;
     }
-
     public String getEquipoTrabajo() {
         return equipoTrabajo;
     }
-
     public String getNivel() {
         return nivel;
     }
-
     public int getMaxProyectosSimultaneos() {
         return maxProyectosSimultaneos;
     }
-
     public double getTarifaPorDia() {
         return tarifaPorDia;
     }
-
     public String getEstado() {
         return estado;
     }
-
     public int getCantidadProyectos() {
         return cantidadProyectos;
     }
 
     // Setters
     public void setEstado(String estado) {
-
-        if (esEstadoValido(estado)) {
-            this.estado = estado;
-
-        } else {
-            System.out.println("Estado invalido: " + estado);
-        }
+        this.estado = estado;
     }
-
     public void setTarifaPorDia(double tarifaPorDia) {
         this.tarifaPorDia = tarifaPorDia;
     }
