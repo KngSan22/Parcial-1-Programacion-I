@@ -1,5 +1,5 @@
 
-public class ServicioAdicional {
+public class Servicio {
     // Atributos
     private String codigo;
     private String nombre;
@@ -8,7 +8,7 @@ public class ServicioAdicional {
     private boolean disponibilidad;
 
     // Constructor
-    public ServicioAdicional(String codigo, String nombre, String descripcion, double precio, boolean disponibilidad) {
+    public Servicio(String codigo, String nombre, String descripcion, double precio, boolean disponibilidad) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
